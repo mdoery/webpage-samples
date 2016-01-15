@@ -1,0 +1,88 @@
+<html>
+<head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Calligraffitti' rel='stylesheet' type='text/css'>
+<link type="text/css" rel="stylesheet" href="css/left-right-footer-divs.css">
+<script>
+var outlineBorder = function() {
+	$( ".leftTableContainer" ).css( "border", "3px solid RoyalBlue" );
+	$( ".rightListContainer" ).css( "border", "3px solid RoyalBlue" );
+	$( "#middle" ).css( "border", "3px solid DodgerBlue" );
+}
+var menuItems = [
+	{item : "house-made granola parfait", price : "$3"},
+	{item : "selection of freshly baked pastries", price : "$13"},
+	{item : "two organic farm eggs any style", price : "$12"},
+	{item : "choice of one glass of freshly squeezed orange or grapefruit juice", price : "$7"},
+	{item : "grilled wagyu hanger steak with two eggs any style", price : "$21"},
+	{item : "6-minute egg, pickled red onions, caperberries", price : "$7"},
+	{item : "brioche french toast with mascarpone-cinnamon mousse", price : "$13"}
+];
+var serviceItems = [
+	"concierge",
+	"laundry",
+	"dry-cleaning",
+	"valet",
+	"room service",
+	"wake-up call"
+]
+var populateMenuTable = function() {
+	$( ".leftTableContainer" ).append('<table width="100%" border="1" class="menuTable">');
+	var table = $(".menuTable");
+	menuItems.forEach(function(menuItem) {
+		var row = $("<tr/>");
+		var td = $("<td/>").text(menuItem.item);
+		row.append(td);
+		var td = $("<td/>").text(menuItem.price);
+		row.append(td);
+		table.append(row);
+	});
+}
+
+var populateServicesList = function() {
+	$( ".rightListContainer" ).append('<ul class="servicesList">');
+	var ul = $(".servicesList");
+	serviceItems.forEach(function(item) {
+		var li = $("<li/>").text(item);
+		ul.append(li);
+	});
+}
+
+var populate = function() {
+	populateMenuTable();
+	populateServicesList();
+	widenMiddleDiv();
+	outlineBorder();
+}
+
+var widenMiddleDiv = function() {
+	var bodyWidthInPx = $( "body" ).width();
+	// We already know that the skyscraper is 160px in width, so...
+	var remainingSpaceInPx = bodyWidthInPx - 160 - 4; // subtract an extra 2 px so we are not right up against skyscraper
+	$( "#middle" ).width(remainingSpaceInPx);
+}
+
+window.onresize = function() {
+	widenMiddleDiv();
+}
+</script>
+</head>
+<body onload="populate();">
+	<div id="content">
+		<a href="#" class="headerLink">upper left nonfunctional link</a>
+		<span class="side-note">
+		&nbsp; Note: ugly borders are shown for demonstration purposes
+		</span>
+		<div id="middle">
+			<div class="leftTableContainer">
+			</div>
+			<div class="rightListContainer">
+			</div>
+			<div class="bottomInputContainer">
+			</div>
+		</div>
+		<div id="skyscraper">This div is 160 px and to the right.</div>
+		<a href="#" class="footerLink">lower left nonfunctional link</a>
+	</div>
+</body>
+</html>
