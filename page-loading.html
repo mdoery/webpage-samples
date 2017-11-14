@@ -1,0 +1,133 @@
+<html>
+<head>
+<style>
+#coverUp {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.ui-progressbar {
+	height: 2em;
+	text-align: left;
+	overflow: hidden;
+}
+.ui-progressbar .ui-progressbar-value {
+	margin: -1px;
+	height: 100%;
+}
+/* This overlay is from jQuery */
+.ui-progressbar-overlay {
+	background: url("data:image/gif;base64,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");
+	height: 10%;
+	filter: alpha(opacity=25); /* support: IE8 */
+	opacity: 0.65; /* opacity is deeper than ui-body-overlay */
+	position: absolute;
+	top: 40%;
+	left: 30%;
+	width: 40%;
+}
+.ui-progressbar-indeterminate .ui-progressbar-value {
+	background-image: none;
+}
+.ui-body-overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.40;
+    background: gray;
+}
+.ui-body-empty {
+}
+</style>
+<script>
+var overlayLifetimeInSeconds = 5;
+/**
+ * Gets a div with input id.
+ */
+var getDiv = function(id) {
+    var progbar = document.getElementById(id);
+    return progbar;
+}
+/**
+ * Returns the progbar div.
+ */
+var getProgbar = function() {
+    var progbar = getDiv("progbar");
+    return progbar;
+}
+/**
+ * Returns the coverUp div.
+ */
+var getCoverUp = function() {
+    var coverUp = getDiv("coverUp");
+    return coverUp;
+}
+/**
+ * Removes the coverUp div.
+ */
+var removeCoverUp = function() {
+/* In jQuery, nice to use fadeOut */
+    var progbar = getProgbar();
+    resetClassName(progbar, 'ui-body-empty');
+    var coverUp = getCoverUp();
+    resetClassName(coverUp, 'ui-body-empty');
+}
+/**
+ * Shows a diagonally moving progress bar for a few seconds,
+ * which then goes away.
+ */
+var init = function() {
+    var progbar = getProgbar();
+    if (progbar) {
+        progbar.className += progbar.className ? ' ui-progressbar ui-progressbar-overlay' : 'ui-progressbar ui-progressbar-overlay';
+    }
+    var coverUp = getCoverUp();
+    addClassName(coverUp, 'ui-body-overlay');
+    var lifetimeMs = overlayLifetimeInSeconds * 1000;
+    setTimeout(function() {
+        removeCoverUp();
+    }, lifetimeMs);
+    updateMessageSpan(overlayLifetimeInSeconds);
+}
+/**
+ * Adds a class name to the input div.
+ */
+var addClassName = function(div, cn) {
+    if (div) {
+        div.className += div.className ? ' ' + cn : cn;
+    }
+}
+/**
+ * Removes any class on the input div, and sets the input class name on it.
+ */
+var resetClassName = function(div, cn) {
+    if (div) {
+        div.className = cn;
+    }
+}
+/**
+ * Updates the message which says how long the overlay has before disappearing.
+ */
+var updateMessageSpan = function(remainingSec) {
+    var sp = document.getElementById("lifetime");
+    var remainingSec = remainingSec - 1;
+    if (remainingSec > -1) {
+        sp.innerHTML = remainingSec;
+	setTimeout(function() {
+            updateMessageSpan(remainingSec);
+	}, 1000);
+    } else {
+        getDiv("message").innerHTML = "Overlay is gone!"; 
+    }
+}
+</script>
+</head>
+<body onload="init();">
+<div id="coverUp">
+  <div id="progbar"></div>
+</div>
+<div id="message">
+The overlay will be removed in <span id="lifetime"></span> seconds.
+</div>
+</body>
+</html>
