@@ -1,0 +1,121 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
+#progressbar .ui-progressbar-value {
+    background-color: #ccc;
+}
+</style>
+<style>
+#coverUp {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.ui-body-overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.40;
+    background: gray;
+}
+.ui-body-empty {
+}
+</style>
+<script>
+var overlayLifetimeInSeconds = 5;
+/**
+ * Gets a div with input id.
+ */
+var getDiv = function(id) {
+    var progbar = document.getElementById(id);
+    return progbar;
+}
+/**
+ * Returns the progbar div.
+ */
+var getProgbar = function() {
+    var progbar = getDiv("progressbar");
+    return progbar;
+}
+/**
+ * Returns the coverUp div.
+ */
+var getCoverUp = function() {
+    var coverUp = getDiv("coverUp");
+    return coverUp;
+}
+/**
+ * Removes the coverUp div.
+ */
+var removeCoverUp = function() {
+/* In jQuery, nice to use fadeOut */
+    var progbar = getProgbar();
+    resetClassName(progbar, 'ui-body-empty');
+    var coverUp = getCoverUp();
+    resetClassName(coverUp, 'ui-body-empty');
+}
+/**
+ * Shows a diagonally moving progress bar for a few seconds,
+ * which then goes away.
+ */
+var init = function() {
+    $( "#progressbar" ).progressbar({
+      value: false
+    });
+    var progressbar = $( "#progressbar" ),
+      progressbarValue = progressbar.find( ".ui-progressbar-value" );
+ 
+      progressbar.progressbar( "option", "value", false );
+    var coverUp = getCoverUp();
+    addClassName(coverUp, 'ui-body-overlay');
+    var lifetimeMs = overlayLifetimeInSeconds * 1000;
+    setTimeout(function() {
+        removeCoverUp();
+    }, lifetimeMs);
+    updateMessageSpan(overlayLifetimeInSeconds);
+}
+/**
+ * Adds a class name to the input div.
+ */
+var addClassName = function(div, cn) {
+    if (div) {
+        div.className += div.className ? ' ' + cn : cn;
+    }
+}
+/**
+ * Removes any class on the input div, and sets the input class name on it.
+ */
+var resetClassName = function(div, cn) {
+    if (div) {
+        div.className = cn;
+    }
+}
+/**
+ * Updates the message which says how long the overlay has before disappearing.
+ */
+var updateMessageSpan = function(remainingSec) {
+    var sp = document.getElementById("lifetime");
+    var remainingSec = remainingSec - 1;
+    if (remainingSec > -1) {
+        sp.innerHTML = remainingSec;
+	setTimeout(function() {
+            updateMessageSpan(remainingSec);
+	}, 1000);
+    } else {
+        getDiv("message").innerHTML = "Overlay is gone!"; 
+    }
+}
+</script>
+</head>
+<body onload="init();">
+<div id="coverUp">
+  <div id="progressbar"></div>
+</div>
+<div id="message">
+The overlay will be removed in <span id="lifetime"></span> seconds.
+</div>
+</body>
+</html>
